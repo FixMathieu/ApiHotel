@@ -31,13 +31,11 @@ public class ApiHotelApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-//		Role superAdmin = roleRepository.save(new Role(null, "ADMIN"));
-//		Role admin = roleRepository.save(new Role(null, "ADMIN"));
-//		Role user = roleRepository.save(new Role(null, "USER"));
+		Role superAdmin = roleRepository.save(new Role(null, "ADMIN"));
+		Role admin = roleRepository.save(new Role(null, "ADMIN"));
+		Role user = roleRepository.save(new Role(null, "USER"));
 
-		Users mat =usersRepository.save(new Users(null,"mat@gmail.com","123",true));
-		Users tristan =usersRepository.save(new Users(null,"tristan@gmail.com","123",true));
-		Users martial =usersRepository.save(new Users(null,"martial@gmail.com","123",true));
+
 
 		City toulouse = cityRepository.save(new City(null, "Toulouse"));
 		City paris = cityRepository.save(new City(null, "Paris"));

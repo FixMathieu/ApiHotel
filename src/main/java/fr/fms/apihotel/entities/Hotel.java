@@ -22,11 +22,27 @@ public class Hotel implements Serializable {
     private String star;
     private int nbrRoom;
     private double price;
-
+    private String image;
     @ManyToOne()
+    @JoinColumn(name="city_id")
     private City city;
 
-    @OneToOne
-    private Image imageModel;
+    @Override
+    public  String toString(){
+        return "Hotel{"+
+                "id=" + id +
+                ", name='" + name + '\''+
+                ", address='" + address +'\'' +
+                ", phone='"+ phone+'\''+
+                ", star='"+ star+'\''+
+                ", nbrRoom='"+ nbrRoom+'\''+
+                ", price='"+ price+'\''+
+                ", image='"+ image +'\''+
+                ", city="+city+'}';
+    }
+
+
+
+
 
 }
