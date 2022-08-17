@@ -5,46 +5,32 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
-/**
- * @author Stagiaire 10P
- *
- */
-@Entity
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
+
+
+@Entity @Data @NoArgsConstructor @AllArgsConstructor
 public class Role implements Serializable {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
 
+//    @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+//    private List<Users> users = new ArrayList<Users>();
 
+//    public Role(Long id, String name) {
+//        this.id = id;
+//        this.name = name;
+//    }
 
-    @ManyToMany
-    @JoinTable(
-            name = "users_role",
-            joinColumns = {@JoinColumn(name = "roleId")},
-            inverseJoinColumns = {@JoinColumn(name = "usersId")}
-    )
-    @JsonIgnore
-    private List<Users> users;
-
-
-    public Role(Long id, String name) {
-        this.id = id;
-        this.name = name;
+    @Override
+    public String toString() {
+        return "Role [roleId=" + id + ", name=" + name + "]";
     }
-    public Role( String name) {
-        this.name = name;
-    }
+
 }

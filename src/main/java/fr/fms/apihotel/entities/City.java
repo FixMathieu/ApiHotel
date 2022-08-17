@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -15,22 +16,19 @@ public class City implements Serializable {
     private Long id;
     private String name;
 
-    @OneToMany(mappedBy = "city", fetch = FetchType.EAGER)
-    @JsonIgnore
-    private List<Hotel> hotels = new java.util.ArrayList<>();
-
-    public List<Hotel> getHotels() {
-        return hotels;
-    }
-
-    public void setHotels(List<Hotel> hotels) {
-        this.hotels = hotels;
-    }
-
+    @OneToMany(mappedBy = "city") @JsonIgnore
+    private Collection<Hotel> hotels;
 
     public City(Long id, String name) {
         this.id = id;
         this.name = name;
+    }
 
+    @Override
+    public String toString() {
+        return "City{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

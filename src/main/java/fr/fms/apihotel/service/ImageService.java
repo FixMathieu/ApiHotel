@@ -1,4 +1,4 @@
-package fr.fms.apihotel.web;
+package fr.fms.apihotel.service;
 
 import org.springframework.web.multipart.MultipartFile;
 

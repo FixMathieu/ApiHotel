@@ -27,6 +27,10 @@ public class Hotel implements Serializable {
     @JoinColumn(name="city_id")
     private City city;
 
+    public Hotel(Long id, String premier, String address, String phone, String star, int nbrRoom, double price, City bordeaux, Object city) {
+    }
+
+
     @Override
     public  String toString(){
         return "Hotel{"+
