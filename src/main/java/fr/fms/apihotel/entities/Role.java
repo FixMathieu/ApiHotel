@@ -1,18 +1,14 @@
-package fr.fms.entities;
+package fr.fms.apihotel.entities;
 
+import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
+
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import fr.fms.apihotel.entities.Users;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,12 +23,10 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Role {
+public class Role implements Serializable {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @NotNull
-    private String role;
+    private String name;
 
 
 
@@ -45,15 +39,12 @@ public class Role {
     @JsonIgnore
     private List<Users> users;
 
-    /**
-     * @param id
-     * @param role
-     */
-    public Role(Long id, String role) {
+
+    public Role(Long id, String name) {
         this.id = id;
-        this.role = role;
+        this.name = name;
     }
-    public Role( String role) {
-        this.role = role;
+    public Role( String name) {
+        this.name = name;
     }
 }

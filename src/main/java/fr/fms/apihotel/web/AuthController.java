@@ -1,122 +1,65 @@
 package fr.fms.apihotel.web;
 
-import fr.fms.apihotel.dao.RoleRepository;
+import com.auth0.jwt.JWT;
 import fr.fms.apihotel.dao.UsersRepository;
 import fr.fms.apihotel.entities.Users;
-import fr.fms.apihotel.security.payload.request.LoginRequest;
-import fr.fms.apihotel.security.payload.request.SignupRequest;
-import fr.fms.apihotel.security.payload.response.JwtResponse;
-import fr.fms.apihotel.security.payload.response.MessageResponse;
-import fr.fms.apihotel.security.security.jwt.JwtUtils;
-import fr.fms.apihotel.security.services.UserDetailsImpl;
+import fr.fms.apihotel.security.JwtUtils;
+import fr.fms.apihotel.security.payload.JwtResponse;
+import fr.fms.apihotel.security.payload.LoginRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.userdetails.User;
+import com.auth0.jwt.algorithms.Algorithm;
 
-import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.Date;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin("*")
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api")
 public class AuthController {
     @Autowired
     AuthenticationManager authenticationManager;
 
     @Autowired
-    UsersRepository userRepository;
-
-    @Autowired
-    RoleRepository roleRepository;
-
-    @Autowired
-    PasswordEncoder encoder;
-
-    @Autowired
-    JwtUtils jwtUtils;
+    UsersRepository usersRepository;
 
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-        System.out.println("plouf");
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+        //creation authentification
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJwtToken(authentication);
+        User user = (User) authentication.getPrincipal();
 
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        List<String> roles = userDetails.getAuthorities().stream()
-                .map(item -> item.getAuthority())
-                .collect(Collectors.toList());
+        //Generate secret algorithm
+        Algorithm algorithm = Algorithm.HMAC256(JwtUtils.SECRET);
 
-        return ResponseEntity.ok(new JwtResponse(jwt,
-                userDetails.getId(),
-                userDetails.getUsername(),
-                userDetails.getMail(),
-                roles));
-    }
+        //Generate access Token
+        String accessToken = JWT.create()
+                .withSubject(user.getUsername())
+                .withExpiresAt(new Date(System.currentTimeMillis() + 30 * 60 * 1000))
+                .withClaim("roles", user.getAuthorities().stream().map(roles ->
+                        roles.getAuthority()).collect(Collectors.toList()))
+                .sign(algorithm);
 
-    @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Username is already taken!"));
-        }
+        //Generate refresh Token
+        String refreshToken = JWT.create()
+                .withSubject(user.getUsername())
+                .withExpiresAt(new Date(System.currentTimeMillis() + 15 * 60 * 1000))
+//                .withIssuer(request.getRequestURL().toString())
+                .sign(algorithm);
 
-        if (userRepository.existsByMail(signUpRequest.getMail())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Email is already in use!"));
-        }
+        Users users = usersRepository.findByEmail(user.getUsername());
 
-        // Create new user's account
-        List<fr.fms.entities.Role> newRole = new ArrayList<>();
-        fr.fms.entities.Role user = new fr.fms.entities.Role("USER");
-        newRole.add(user);
-
-        Users users = new Users(null, (signUpRequest.getUsername()),
-                signUpRequest.getMail(),
-                encoder.encode(signUpRequest.getPassword()), true, newRole);
-
-        Set<String> strRoles = signUpRequest.getRole();
-        List<fr.fms.entities.Role> roles = new ArrayList<>();
-
-        if (strRoles == null) {
-            fr.fms.entities.Role userRole = roleRepository.findByRole("USER")
-                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-            roles.add(userRole);
-        } else {
-            strRoles.forEach(role -> {
-                switch (role) {
-                    case "ADMIN":
-                        fr.fms.entities.Role adminRole = roleRepository.findByRole("ADMIN")
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        System.out.println("adminrole" + adminRole.getRole());
-                        roles.add(adminRole);
-
-                        break;
-                    default:
-                        fr.fms.entities.Role userRole = roleRepository.findByRole("USER")
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        System.out.println("userrole" + userRole.getRole());
-                        roles.add(userRole);
-                }
-            });
-        }
-
-        users.setRoles(roles);
-        userRepository.save(users);
-
-        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+        //Generate response
+        JwtResponse response = new JwtResponse(accessToken, refreshToken, users, user.getAuthorities());
+        return ResponseEntity.ok(response);
     }
 }
-

@@ -10,11 +10,12 @@ import fr.fms.apihotel.entities.Image;
 import fr.fms.apihotel.entities.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
-
+@Service
 public class IBusinessImpl implements IBusiness{
     @Autowired
     UsersRepository usersRepository;
@@ -68,10 +69,10 @@ public class IBusinessImpl implements IBusiness{
         return cityRepository.findAll();
     }
 
-
     @Override
     public Optional<Users> getUserByMail(String mail) throws Exception {
-
-        return usersRepository.findByMail(mail);
+        return Optional.empty();
     }
+
+
 }

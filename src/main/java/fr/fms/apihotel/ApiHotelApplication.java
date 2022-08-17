@@ -4,13 +4,16 @@ import fr.fms.apihotel.dao.*;
 import fr.fms.apihotel.entities.City;
 import fr.fms.apihotel.entities.Hotel;
 import fr.fms.apihotel.entities.Users;
-import fr.fms.entities.Role;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import javax.management.relation.Role;
+
 @SpringBootApplication
-public class ApiHotelApplication {
+public class ApiHotelApplication implements CommandLineRunner {
 	@Autowired
 	CityRepository cityRepository;
 	@Autowired
@@ -28,9 +31,9 @@ public class ApiHotelApplication {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Role superAdmin = roleRepository.save(new Role(null, "SUPERADMIN"));
-		Role admin = roleRepository.save(new Role(null, "ADMIN"));
-		Role user = roleRepository.save(new Role(null, "USER"));
+//		Role superAdmin = roleRepository.save(new Role(null, "ADMIN"));
+//		Role admin = roleRepository.save(new Role(null, "ADMIN"));
+//		Role user = roleRepository.save(new Role(null, "USER"));
 
 		Users mat =usersRepository.save(new Users(null,"mat@gmail.com","123",true));
 		Users tristan =usersRepository.save(new Users(null,"tristan@gmail.com","123",true));
@@ -61,6 +64,11 @@ public class ApiHotelApplication {
 		Hotel two222 = hotelRepository.save(new Hotel(null,"Deuxième","123 rue des chênes","0501020305","3 étoiles",6,83.5,lyon,null));
 		Hotel three333 = hotelRepository.save(new Hotel(null,"Troisième","123 rue des champs","0501020306","4 étoiles",10,153.5,lyon,null));
 		Hotel four444 = hotelRepository.save(new Hotel(null,"Quatrième","123 rue des plages","0501020304","5 étoiles",15,353.5,lyon,null));
+
+		Hotel one1111 = hotelRepository.save(new Hotel(null,"Premier","123 rue des lilas","0501020304","2 étoiles",5,53.5,nancy,null));
+		Hotel two2222 = hotelRepository.save(new Hotel(null,"Deuxième","123 rue des chênes","0501020305","3 étoiles",6,83.5,nancy,null));
+		Hotel three3333 = hotelRepository.save(new Hotel(null,"Troisième","123 rue des champs","0501020306","4 étoiles",10,153.5,nancy,null));
+		Hotel four4444 = hotelRepository.save(new Hotel(null,"Quatrième","123 rue des plages","0501020304","5 étoiles",15,353.5,nancy,null));
 	}
 
 }
