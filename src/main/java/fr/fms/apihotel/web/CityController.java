@@ -1,8 +1,4 @@
 package fr.fms.apihotel.web;
-
-
-
-
 import fr.fms.apihotel.entities.City;
 import fr.fms.apihotel.service.ImplCityService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -42,55 +42,55 @@ public class ApiHotelApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		populateUsers();
-		populateHotels();
+//		populateUsers();
+//		populateHotels();
 	}
-		public void populateHotels() {
-
-		City toulouse = cityRepository.save(new City(null, "Toulouse"));
-		City paris = cityRepository.save(new City(null, "Paris"));
-		City bordeaux = cityRepository.save(new City(null, "Bordeaux"));
-		City lyon = cityRepository.save(new City(null, "Lyon"));
-		City nancy = cityRepository.save(new City(null, "Nancy"));
-
-		Hotel one = hotelRepository.save(new Hotel(null,"Premier","123 rue des lilas","0501020304","2 étoiles",5,53.5,"null",bordeaux));
-		Hotel two = hotelRepository.save(new Hotel(null,"Deuxième","123 rue des chênes","0501020305","3 étoiles",6,83.5,"null",bordeaux));
-		Hotel three = hotelRepository.save(new Hotel(null,"Troisième","123 rue des champs","0501020306","4 étoiles",10,153.5,"null",bordeaux));
-		Hotel four = hotelRepository.save(new Hotel(null,"Quatrième","123 rue des plages","0501020304","5 étoiles",15,353.5,"null",bordeaux));
-
-		Hotel one1 = hotelRepository.save(new Hotel(null,"Premier","123 rue des lilas","0501020304","2 étoiles",5,53.5,"null",toulouse));
-		Hotel two2 = hotelRepository.save(new Hotel(null,"Deuxième","123 rue des chênes","0501020305","3 étoiles",6,83.5,"null",toulouse));
-		Hotel three3 = hotelRepository.save(new Hotel(null,"Troisième","123 rue des champs","0501020306","4 étoiles",10,153.5,"null",toulouse));
-		Hotel four4 = hotelRepository.save(new Hotel(null,"Quatrième","123 rue des plages","0501020304","5 étoiles",15,353.5,"null",toulouse));
-
-		Hotel one11 = hotelRepository.save(new Hotel(null,"Premier","123 rue des lilas","0501020304","2 étoiles",5,53.5,"null",paris));
-		Hotel two22 = hotelRepository.save(new Hotel(null,"Deuxième","123 rue des chênes","0501020305","3 étoiles",6,83.5,"null",paris));
-		Hotel three33 = hotelRepository.save(new Hotel(null,"Troisième","123 rue des champs","0501020306","4 étoiles",10,153.5,"null",paris));
-		Hotel four44 = hotelRepository.save(new Hotel(null,"Quatrième","123 rue des plages","0501020304","5 étoiles",15,353.5,"null",paris));
-
-		Hotel one111 = hotelRepository.save(new Hotel(null,"Premier","123 rue des lilas","0501020304","2 étoiles",5,53.5,"null",lyon));
-		Hotel two222 = hotelRepository.save(new Hotel(null,"Deuxième","123 rue des chênes","0501020305","3 étoiles",6,83.5,"null",lyon));
-		Hotel three333 = hotelRepository.save(new Hotel(null,"Troisième","123 rue des champs","0501020306","4 étoiles",10,153.5,"null",lyon));
-		Hotel four444 = hotelRepository.save(new Hotel(null,"Quatrième","123 rue des plages","0501020304","5 étoiles",15,353.5,"null",lyon));
-
-		Hotel one1111 = hotelRepository.save(new Hotel(null,"Premier","123 rue des lilas","0501020304","2 étoiles",5,53.5,"null",nancy));
-		Hotel two2222 = hotelRepository.save(new Hotel(null,"Deuxième","123 rue des chênes","0501020305","3 étoiles",6,83.5,"null",nancy));
-		Hotel three3333 = hotelRepository.save(new Hotel(null,"Troisième","123 rue des champs","0501020306","4 étoiles",10,153.5,"null",nancy));
-		Hotel four4444 = hotelRepository.save(new Hotel(null,"Quatrième","123 rue des plages","0501020304","5 étoiles",15,353.5,"null",nancy));
-	}
-
-	public void populateUsers() {
-		Role admin = implRoleService.save(new Role(null, "ADMIN"));
-		Role user = implRoleService.save(new Role(null, "USER"));
-
-		List<Role> mat = new ArrayList<>();
-		mat.add(admin);
-		mat.add(user);
-
-		List<Role> tristan = new ArrayList<>();
-		tristan.add(user);
-
-		implUserService.save(new Users(null, "j.delmerie@live.fr", "del",  security.encodePassword("mdp1"), true, mat));
-		implUserService.save(new Users(null, "mama@live.fr", "mamacita", security.encodePassword("mdp2"),true, tristan));
-	}
+//		public void populateHotels() {
+//
+//		City toulouse = cityRepository.save(new City(null, "Toulouse"));
+//		City paris = cityRepository.save(new City(null, "Paris"));
+//		City bordeaux = cityRepository.save(new City(null, "Bordeaux"));
+//		City lyon = cityRepository.save(new City(null, "Lyon"));
+//		City nancy = cityRepository.save(new City(null, "Nancy"));
+//
+//		Hotel one = hotelRepository.save(new Hotel(null,"Premier","123 rue des lilas","0501020304","2 étoiles",5,53.5,"bordeaux.jpg",bordeaux));
+//		Hotel two = hotelRepository.save(new Hotel(null,"Deuxième","123 rue des chênes","0501020305","3 étoiles",6,83.5,"bordeaux.jpg",bordeaux));
+//		Hotel three = hotelRepository.save(new Hotel(null,"Troisième","123 rue des champs","0501020306","4 étoiles",10,153.5,"bordeaux.jpg",bordeaux));
+//		Hotel four = hotelRepository.save(new Hotel(null,"Quatrième","123 rue des plages","0501020304","5 étoiles",15,353.5,"bordeaux.jpg",bordeaux));
+//
+//		Hotel one1 = hotelRepository.save(new Hotel(null,"Premier","123 rue des lilas","0501020304","2 étoiles",5,53.5,"null",toulouse));
+//		Hotel two2 = hotelRepository.save(new Hotel(null,"Deuxième","123 rue des chênes","0501020305","3 étoiles",6,83.5,"null",toulouse));
+//		Hotel three3 = hotelRepository.save(new Hotel(null,"Troisième","123 rue des champs","0501020306","4 étoiles",10,153.5,"null",toulouse));
+//		Hotel four4 = hotelRepository.save(new Hotel(null,"Quatrième","123 rue des plages","0501020304","5 étoiles",15,353.5,"null",toulouse));
+//
+//		Hotel one11 = hotelRepository.save(new Hotel(null,"Premier","123 rue des lilas","0501020304","2 étoiles",5,53.5,"null",paris));
+//		Hotel two22 = hotelRepository.save(new Hotel(null,"Deuxième","123 rue des chênes","0501020305","3 étoiles",6,83.5,"null",paris));
+//		Hotel three33 = hotelRepository.save(new Hotel(null,"Troisième","123 rue des champs","0501020306","4 étoiles",10,153.5,"null",paris));
+//		Hotel four44 = hotelRepository.save(new Hotel(null,"Quatrième","123 rue des plages","0501020304","5 étoiles",15,353.5,"null",paris));
+//
+//		Hotel one111 = hotelRepository.save(new Hotel(null,"Premier","123 rue des lilas","0501020304","2 étoiles",5,53.5,"null",lyon));
+//		Hotel two222 = hotelRepository.save(new Hotel(null,"Deuxième","123 rue des chênes","0501020305","3 étoiles",6,83.5,"null",lyon));
+//		Hotel three333 = hotelRepository.save(new Hotel(null,"Troisième","123 rue des champs","0501020306","4 étoiles",10,153.5,"null",lyon));
+//		Hotel four444 = hotelRepository.save(new Hotel(null,"Quatrième","123 rue des plages","0501020304","5 étoiles",15,353.5,"null",lyon));
+//
+//		Hotel one1111 = hotelRepository.save(new Hotel(null,"Premier","123 rue des lilas","0501020304","2 étoiles",5,53.5,"null",nancy));
+//		Hotel two2222 = hotelRepository.save(new Hotel(null,"Deuxième","123 rue des chênes","0501020305","3 étoiles",6,83.5,"null",nancy));
+//		Hotel three3333 = hotelRepository.save(new Hotel(null,"Troisième","123 rue des champs","0501020306","4 étoiles",10,153.5,"null",nancy));
+//		Hotel four4444 = hotelRepository.save(new Hotel(null,"Quatrième","123 rue des plages","0501020304","5 étoiles",15,353.5,"null",nancy));
+//	}
+//
+//	public void populateUsers() {
+//		Role admin = implRoleService.save(new Role(null, "ADMIN"));
+//		Role user = implRoleService.save(new Role(null, "USER"));
+//
+//		List<Role> mat = new ArrayList<>();
+//		mat.add(admin);
+//		mat.add(user);
+//
+//		List<Role> tristan = new ArrayList<>();
+//		tristan.add(user);
+//
+//		implUserService.save(new Users(null, "mat@gmail.com", "mat",  security.encodePassword("123"), true, mat));
+//		implUserService.save(new Users(null, "tristan@gmail.com", "tristan", security.encodePassword("123"),true, tristan));
+//	}
 }
